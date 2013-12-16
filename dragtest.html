@@ -11,6 +11,7 @@
  <style>
 .resizable { width: 150px; height: 150px; padding: 0.5em; }
 .resizable h3 { text-align: center; margin: 0; }
+.draggable { position:absolute }
 </style>
 <script>
 $(function() {
@@ -19,13 +20,12 @@ $(function() {
 	$( ".draggable" ).draggable({
 		appendTo: "#level",
 		helper: "clone",
-		snap:"#level"
 	});
 
 	$( ".droppable" ).droppable({
 		drop: function( event, ui ) {
 		
-            $(this).append($(ui.draggable).clone());
+            $(this).append($(ui.helper).clone());
 		
 		}
 	});
