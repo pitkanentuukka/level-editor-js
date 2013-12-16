@@ -9,7 +9,7 @@
 
 
  <style>
-.resizable { width: 150px; height: 150px; padding: 0.5em; }
+#level { width: 600px; height: 350px; padding: 0.5em; }
 .resizable h3 { text-align: center; margin: 0; }
 .draggable { position:absolute }
 </style>
@@ -25,7 +25,15 @@ $(function() {
 	$( ".droppable" ).droppable({
 		drop: function( event, ui ) {
 		
-            $(this).append($(ui.helper).clone());
+			dropped =$(ui.helper).clone();
+			$(dropped).removeClass("draggable");
+			$(dropped).removeClass("ui-draggable");
+			$(dropped).removeClass("ui-draggable-dragging");
+			$(dropped).addClass("draggable");
+			$(dropped).addClass("ui-draggable");
+			$(dropped).addClass("resizable");
+			$(dropped).addClass("ui-resizable");
+            $(this).append(dropped);
 		
 		}
 	});
@@ -36,7 +44,7 @@ $(function() {
 <body>
 <div id="level" class="ui-widget-content resizable droppable">
 </div>
-<img src="tile2.png" class="draggable">
+<div class="draggable resizable"><img src="tile2.png"></div>
 </body>
 </head>
 
