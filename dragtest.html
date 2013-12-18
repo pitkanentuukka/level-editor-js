@@ -12,6 +12,8 @@
 #level { width: 600px; height: 350px; padding: 0.5em; }
 .resizable h3 { text-align: center; margin: 0; }
 .draggable { position:absolute }
+.ui-selected { border-style:solid; }
+.ui-selecting { border-style:dotted; }
 </style>
 <script>
 $(function() {
@@ -26,25 +28,44 @@ $(function() {
 		drop: function( event, ui ) {
 		
 			dropped =$(ui.helper).clone();
-			$(dropped).removeClass("draggable");
-			$(dropped).removeClass("ui-draggable");
 			$(dropped).removeClass("ui-draggable-dragging");
-			$(dropped).addClass("draggable");
-			$(dropped).addClass("ui-draggable");
-			$(dropped).addClass("resizable");
-			$(dropped).addClass("ui-resizable");
+			$(dropped).removeClass("ui-draggable");
+			$(dropped).removeClass("draggable");
+			$(dropped).addClass("levelitem");
             $(this).append(dropped);
 		
+			$(".levelitem").addClass("selectable").
+			addClass("draggable").
+			addClass("ui-draggable");
 		}
 	});
+
+
+
 });
+
+/*$(function() {
+$(".box-clone").live('mouseover', function() {
+    $(this).draggable();
+});
+$(".box").draggable({ 
+    helper: 'clone'
+    stop: function(event, ui) {
+        $(ui.helper).clone(true).removeClass('box ui-draggable ui-draggable-dragging').addClass('box-clone').appendTo('body');
+    }
+});
+
+
+
+});*/
+
 </script>
 
 </head>
 <body>
 <div id="level" class="ui-widget-content resizable droppable">
 </div>
-<div class="draggable resizable"><img src="tile2.png"></div>
+<div class="draggable resizable selectable tile"><img src="tile2.png" width=100% height=100%></div>
 </body>
 </head>
 
