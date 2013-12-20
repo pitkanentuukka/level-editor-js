@@ -17,11 +17,13 @@
 </style>
 <script>
 $(function() {
+		/*
 	$(".resizable" ).resizable();
 
 	$( ".draggable" ).draggable({
 		appendTo: "#level",
 		helper: "clone",
+		snap: true,
 	});
 
 	$( ".droppable" ).droppable({
@@ -39,6 +41,36 @@ $(function() {
 			addClass("ui-draggable");
 		}
 	});
+
+*/
+	$(".listeditem").draggable({
+		appendTo: "#level",
+		helper: "clone",
+		snap: true,
+	});
+	$(".listeditem").resizable();
+
+
+
+	$( ".droppable" ).droppable({
+		drop: function( event, ui ) {
+		
+			dropped =$(ui.helper).clone();
+			$(dropped).removeClass("ui-draggable-dragging");
+			$(dropped).removeClass("ui-draggable");
+			$(dropped).removeClass("resizable");
+			$(dropped).removeClass("ui-resizable");
+			$(dropped).removeClass("draggable");
+			$(dropped).removeClass("listeditem");
+			$(dropped).addClass("mappeditem");
+            $(this).append(dropped);
+		}
+	});
+	$(".mappeditem").draggable();
+	$(".mappeditem").selectable();
+	$(".mappeditem").resizable();
+
+
 
 
 
@@ -65,7 +97,7 @@ $(".box").draggable({
 <body>
 <div id="level" class="ui-widget-content resizable droppable">
 </div>
-<div class="draggable resizable selectable tile"><img src="tile2.png" width=100% height=100%></div>
+<div class="listeditem"><img src="tile2.png" width=100% height=100%></div>
 </body>
 </head>
 
