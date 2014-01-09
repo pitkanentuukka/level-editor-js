@@ -85,6 +85,29 @@ $(function() {
 
 });
 
+
+
+function generateLevel() {
+	alert("painoit minua!");
+	var levelwidth = $("#level").width();
+	var levelheight = $("#level").height();
+	/*$("#output").innerhtml("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
+
+	var leveldef = "<level width=\"" + levelwidth +"\" height=\"" + 
+		levelheight + "\">";		
+
+	$("#output").append(leveldef);
+
+
+
+	$("#output").append("</level>");*/
+
+	$("#output").text("testiteksti!");
+
+
+}
+$("#generator").click(generateLevel);
+
 /*$(function() {
 $(".box-clone").live('mouseover', function() {
     $(this).draggable();
@@ -96,9 +119,11 @@ $(".box").draggable({
     }
 });
 
+*/
 
 
-});*/
+
+
 
 </script>
 
@@ -107,7 +132,8 @@ $(".box").draggable({
 <div id="level" class="ui-widget-content droppable">
 </div>
 <div class="listeditem" width=96px height=96px><img src="tile2.png" width=100% height=100%></div>
-<div class="mappeditem" width=96px height=96px><img src="tile2.png" width=100% height=100%></div>
+<button id="generator">paina minua!</button>
+<div id="output"></div>
 </body>
 </head>
 
