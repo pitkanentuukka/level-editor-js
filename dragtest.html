@@ -96,6 +96,18 @@ function generateLevel() {
 		levelheight + "\">\n");
 			// TODO: level items!
 
+	//$("#level").children()
+	$(".mappeditem").each(function(index) {
+			var mappeditemtext ="<entity ";
+			var type=$(this).data('entitytype');
+			mappeditemtext = mappeditemtext.concat("type=\"");
+			mappeditemtext = mappeditemtext.concat(type);
+			mappeditemtext = mappeditemtext.concat("\"");
+			mappeditemtext = mappeditemtext.concat("/>\n");
+
+			levelstring = levelstring.concat(mappeditemtext);
+	});
+
 	levelstring = levelstring.concat("</level>");
 
 
@@ -103,7 +115,7 @@ function generateLevel() {
 
 
 }
-$("#generator").click(generateLevel);
+
 
 /*$(function() {
 $(".box-clone").live('mouseover', function() {
@@ -128,8 +140,8 @@ $(".box").draggable({
 <body>
 <div id="level" class="ui-widget-content droppable">
 </div>
-<div class="listeditem" width=96px height=96px><img src="tile2.png" width=100% height=100%></div>
-<button id="generator" onclick="generateLevel()">paina minua!</button>
+<div class="listeditem" data-entitytype="tile" width=96px height=96px><img src="tile2.png"></div>
+<button id="generator" onclick="generateLevel()">generate!</button>
 <textarea rows="4" cols="50" id="output">
 
 </textarea>
