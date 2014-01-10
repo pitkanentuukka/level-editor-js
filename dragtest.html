@@ -88,21 +88,18 @@ $(function() {
 
 
 function generateLevel() {
-	alert("painoit minua!");
 	var levelwidth = $("#level").width();
 	var levelheight = $("#level").height();
-	/*$("#output").innerhtml("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
+	var xmlenc = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
 
-	var leveldef = "<level width=\"" + levelwidth +"\" height=\"" + 
-		levelheight + "\">";		
+	levelstring = xmlenc.concat("<level width=\"" + levelwidth +"\" height=\"" + 
+		levelheight + "\">\n");
+			// TODO: level items!
 
-	$("#output").append(leveldef);
+	levelstring = levelstring.concat("</level>");
 
 
-
-	$("#output").append("</level>");*/
-
-	$("#output").text("testiteksti!");
+	$("#output").val(levelstring);
 
 
 }
@@ -132,8 +129,10 @@ $(".box").draggable({
 <div id="level" class="ui-widget-content droppable">
 </div>
 <div class="listeditem" width=96px height=96px><img src="tile2.png" width=100% height=100%></div>
-<button id="generator">paina minua!</button>
-<div id="output"></div>
+<button id="generator" onclick="generateLevel()">paina minua!</button>
+<textarea rows="4" cols="50" id="output">
+
+</textarea>
 </body>
-</head>
+</html>
 
