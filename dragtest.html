@@ -84,19 +84,29 @@ $(function() {
 	});
 
 });
+function generateMap() {
+	//$("#level").empty();
+	var leveltext = $("#output").val();
+	var xmlLevel = $.parseXML(leveltext);
+	$xml = $(xmlLevel);
+	var levelwidth = $xml.find("level").attr('width');
+	var levelheight = $xml.find("level").attr('height');
+	$("#level").css("width",  levelwidth);
+	$("#level").css("height", levelheight);
 
 
 
-function generateLevel() {
+}
+
+
+function generateText() {
 	var levelwidth = $("#level").width();
 	var levelheight = $("#level").height();
 	var xmlenc = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
 
 	levelstring = xmlenc.concat("<level width=\"" + levelwidth +"\" height=\"" + 
 		levelheight + "\">\n");
-			// TODO: level items!
 
-	//$("#level").children()
 	$(".mappeditem").each(function(index) {
 			var mappeditemtext ="<entity ";
 			var type=$(this).data('entitytype');
@@ -158,7 +168,8 @@ $(".box").draggable({
 <div id="level" class="ui-widget-content droppable">
 </div>
 <div class="listeditem" data-entitytype="tile" width=96px height=96px><img src="tile2.png"></div>
-<button id="generator" onclick="generateLevel()">generate!</button>
+<button id="textgenerator" onclick="generateText()">map to text!</button>
+<button id="mapgenerator" onclick="generateMap()">text to map!</button>
 <textarea rows="4" cols="50" id="output">
 
 </textarea>
