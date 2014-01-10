@@ -100,9 +100,26 @@ function generateLevel() {
 	$(".mappeditem").each(function(index) {
 			var mappeditemtext ="<entity ";
 			var type=$(this).data('entitytype');
+
+			var position = $(this).position();
+			itemX = position.left + ($(this).innerWidth() / 2);
+			itemY = $("#level").innerHeight() - (position.top + ($(this).innerHeight() / 2));
+
+			mappeditemtext = mappeditemtext.concat(" x=");
+			mappeditemtext = mappeditemtext.concat("\"");
+			mappeditemtext = mappeditemtext.concat(itemX);
+			mappeditemtext = mappeditemtext.concat("\"");
+
+			mappeditemtext = mappeditemtext.concat(" y=");
+			mappeditemtext = mappeditemtext.concat("\"");
+			mappeditemtext = mappeditemtext.concat(itemY);
+			mappeditemtext = mappeditemtext.concat("\" ");
+
+
 			mappeditemtext = mappeditemtext.concat("type=\"");
 			mappeditemtext = mappeditemtext.concat(type);
 			mappeditemtext = mappeditemtext.concat("\"");
+			
 			mappeditemtext = mappeditemtext.concat("/>\n");
 
 			levelstring = levelstring.concat(mappeditemtext);
