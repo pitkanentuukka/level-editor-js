@@ -93,9 +93,15 @@ function generateMap() {
 	var levelheight = $xml.find("level").attr('height');
 	$("#level").css("width",  levelwidth);
 	$("#level").css("height", levelheight);
-
-
-
+	$xml.find('entity').each(function() {
+			var type = $(this).attr('type');
+			var x = $(this).attr('x');
+			var y = $(this).attr('y');
+			// this is where we find the listed item
+			// we create a new mapped item from it
+			var entityprototype = $("div[data-entitytype=" + type+"]");
+			//alert(entityprototype.html());
+			});
 }
 
 
