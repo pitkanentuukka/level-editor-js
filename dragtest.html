@@ -64,7 +64,7 @@ $(function() {
 
 
 
-	$(".listeditem").resizable();
+	//$(".listeditem").resizable();
 
 
 
@@ -79,13 +79,17 @@ $(function() {
 			$(dropped).removeClass("draggable");
 			$(dropped).removeClass("listeditem");
 			$(dropped).addClass("mappeditem");
+			var width = $(dropped).width();
+			var height = $(dropped).height();
+			$(dropped).css("width", width);
+			$(dropped).css("height", height);
             $(this).append(dropped);
 		}
 	});
 
 });
 function generateMap() {
-	//$("#level").empty();
+	$("#level").empty();
 	var leveltext = $("#output").val();
 	var xmlLevel = $.parseXML(leveltext);
 	$xml = $(xmlLevel);
@@ -100,7 +104,18 @@ function generateMap() {
 			// this is where we find the listed item
 			// we create a new mapped item from it
 			var entityprototype = $("div[data-entitytype=" + type+"]");
+
+			console.log("width: " + entityprototype.width());
+			var cssX = x - (entityprototype.innerWidth() / 2);
+			var cssY = $("#level").innerHeight() + (y - (entityprototype.innerHeight() / 2));
 			//alert(entityprototype.html());
+			entityprototype.clone().appendTo("#level")
+				.removeClass("listeditem")
+				.addClass("mappeditem")
+				.css("position", "absolute")
+				.css('top', cssY)
+				.css('left', cssX);
+
 			});
 }
 
@@ -118,6 +133,11 @@ function generateText() {
 			var type=$(this).data('entitytype');
 
 			var position = $(this).position();
+			console.log("innerwidth: " + $(this).innerWidth());
+			console.log("outerwidth: " + $(this).outerWidth());
+			console.log("width: " + $(this).width());
+			var width = $(this).innerWidth();
+			var height = $(this).innerHeight();
 			itemX = position.left + ($(this).innerWidth() / 2);
 			itemY = $("#level").innerHeight() - (position.top + ($(this).innerHeight() / 2));
 
@@ -131,8 +151,13 @@ function generateText() {
 			mappeditemtext = mappeditemtext.concat(itemY);
 			mappeditemtext = mappeditemtext.concat("\" ");
 
+			mappeditemtext = mappeditemtext.concat("width=")
+			mappeditemtext = mappeditemtext.concat(width)
+			mappeditemtext = mappeditemtext.concat(" height=")
+			mappeditemtext = mappeditemtext.concat(height)
 
-			mappeditemtext = mappeditemtext.concat("type=\"");
+
+			mappeditemtext = mappeditemtext.concat(" type=\"");
 			mappeditemtext = mappeditemtext.concat(type);
 			mappeditemtext = mappeditemtext.concat("\"");
 			
@@ -149,7 +174,11 @@ function generateText() {
 
 }
 
+function reset() {
+	$("#level").empty();
+	$("#output").val("");
 
+}
 /*$(function() {
 $(".box-clone").live('mouseover', function() {
     $(this).draggable();
@@ -176,6 +205,7 @@ $(".box").draggable({
 <div class="listeditem" data-entitytype="tile" width=96px height=96px><img src="tile2.png"></div>
 <button id="textgenerator" onclick="generateText()">map to text!</button>
 <button id="mapgenerator" onclick="generateMap()">text to map!</button>
+<button id="reset" onclick="reset()">reset!</button>
 <textarea rows="4" cols="50" id="output">
 
 </textarea>
