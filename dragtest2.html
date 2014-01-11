@@ -1,0 +1,210 @@
+<html>
+<head>
+
+ <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<link rel="stylesheet" href="/resources/demos/style.css">
+
+
+
+ <style>
+#level { width: 600px; height: 350px; padding: 0.5em; }
+.resizable h3 { text-align: center; margin: 0; }
+.draggable { position:absolute }
+.ui-selected { border-style:solid; }
+.ui-selecting { border-style:dotted; }
+</style>
+<script>
+$(function() {
+		$(".mappeditem").draggable({
+			containment : "#level"
+			});
+	$(".mappeditem").selectable();
+	$(".mappeditem").resizable();
+
+	$("#level").resizable();
+		/*
+	$(".resizable" ).resizable();
+
+	$( ".draggable" ).draggable({
+		appendTo: "#level",
+		helper: "clone",
+		snap: true,
+	});
+
+	$( ".droppable" ).droppable({
+		drop: function( event, ui ) {
+		
+			dropped =$(ui.helper).clone();
+			$(dropped).removeClass("ui-draggable-dragging");
+			$(dropped).removeClass("ui-draggable");
+			$(dropped).removeClass("draggable");
+			$(dropped).addClass("levelitem");
+            $(this).append(dropped);
+		
+			$(".levelitem").addClass("selectable").
+			addClass("draggable").
+			addClass("ui-draggable");
+		}
+	});
+
+*/
+	$(".listeditem").draggable({
+		appendTo: "#level",
+		helper: "clone",
+		snap: true,
+		addClasses:false,
+	}).bind ("dragstop", f = function (event, ui) {
+		dragged = ui.helper.clone();
+		$(dragged).draggable();
+		$(dragged).resizable();
+		});
+
+
+
+
+	$(".listeditem").resizable();
+
+
+
+	$( ".droppable" ).droppable({
+		drop: function( event, ui ) {
+		
+			dropped =$(ui.helper).clone();
+			$(dropped).removeClass("ui-draggable-dragging");
+			$(dropped).removeClass("ui-draggable");
+			$(dropped).removeClass("resizable");
+			$(dropped).removeClass("ui-resizable");
+			$(dropped).removeClass("draggable");
+			$(dropped).removeClass("listeditem");
+			$(dropped).addClass("mappeditem");
+            $(this).append(dropped);
+		}
+	});
+
+});
+function generateMap() {
+	//$("#level").empty();
+	var leveltext = $("#output").val();
+	var xmlLevel = $.parseXML(leveltext);
+	$xml = $(xmlLevel);
+	var levelwidth = $xml.find("level").attr('width');
+	var levelheight = $xml.find("level").attr('height');
+	$("#level").css("width",  levelwidth);
+	$("#level").css("height", levelheight);
+	$xml.find('entity').each(function() {
+			var type = $(this).attr('type');
+			var x = $(this).attr('x');
+			var y = $(this).attr('y');
+			// this is where we find the listed item
+			// we create a new mapped item from it
+			var entityprototype = $("div[data-entitytype=" + type+"]");
+			var cssX = x - (entityprototype.innerWidth() / 2);
+			//var cssY = $("#level").innerHeight() + (y - (entityprototype.innerHeight() / 2));
+			var cssY = $("#level").innerHeight() - (entityprototype.innerHeight() / 2) + y;
+			console.log("levelheight: "+$("#level").innerHeight());
+			//alert(entityprototype.html());
+			entityprototype.clone().appendTo("#level")
+				.removeClass("listeditem")
+				.addClass("mappeditem")
+				.css("position", "absolute")
+				.css('top', cssY)
+				.css('left', cssX);
+
+			});
+}
+
+
+function generateText() {
+	var levelwidth = $("#level").width();
+	var levelheight = $("#level").height();
+	var xmlenc = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
+
+	levelstring = xmlenc.concat("<level width=\"" + levelwidth +"\" height=\"" + 
+		levelheight + "\">\n");
+
+	$(".mappeditem").each(function(index) {
+			var mappeditemtext ="<entity ";
+			var type=$(this).data('entitytype');
+
+			var width = $(this).innerWidth();
+			var height = $(this).innerHeight();
+			var position = $(this).position();
+			itemX = position.left + ($(this).innerWidth() / 2);
+			itemY = $("#level").innerHeight() - (position.top + ($(this).innerHeight() / 2));
+
+			mappeditemtext = mappeditemtext.concat(" x=");
+			mappeditemtext = mappeditemtext.concat("\"");
+			mappeditemtext = mappeditemtext.concat(itemX);
+			mappeditemtext = mappeditemtext.concat("\"");
+
+			mappeditemtext = mappeditemtext.concat(" y=");
+			mappeditemtext = mappeditemtext.concat("\"");
+			mappeditemtext = mappeditemtext.concat(itemY);
+			mappeditemtext = mappeditemtext.concat("\" ");
+
+			mappeditemtext = mappeditemtext.concat("width=")
+			mappeditemtext = mappeditemtext.concat("\"");
+			mappeditemtext = mappeditemtext.concat(width)
+			mappeditemtext = mappeditemtext.concat("\"");
+			mappeditemtext = mappeditemtext.concat(" height=")
+			mappeditemtext = mappeditemtext.concat("\"");
+			mappeditemtext = mappeditemtext.concat(height)
+			mappeditemtext = mappeditemtext.concat("\"");
+
+			mappeditemtext = mappeditemtext.concat(" type=\"");
+			mappeditemtext = mappeditemtext.concat(type);
+			mappeditemtext = mappeditemtext.concat("\"");
+			
+			mappeditemtext = mappeditemtext.concat("/>\n");
+
+			levelstring = levelstring.concat(mappeditemtext);
+	});
+
+	levelstring = levelstring.concat("</level>");
+
+
+	$("#output").val(levelstring);
+
+
+}
+
+function reset() {
+	$("#level").empty();
+	$("#output").val("");
+
+}
+/*$(function() {
+$(".box-clone").live('mouseover', function() {
+    $(this).draggable();
+});
+$(".box").draggable({ 
+    helper: 'clone'
+    stop: function(event, ui) {
+        $(ui.helper).clone(true).removeClass('box ui-draggable ui-draggable-dragging').addClass('box-clone').appendTo('body');
+    }
+});
+
+*/
+
+
+
+
+
+</script>
+
+</head>
+<body>
+<div id="level" class="ui-widget-content droppable">
+</div>
+<div class="listeditem" data-entitytype="tile" width=96px height=96px><img src="tile2.png"></div>
+<button id="textgenerator" onclick="generateText()">map to text!</button>
+<button id="mapgenerator" onclick="generateMap()">text to map!</button>
+<button id="reset" onclick="reset()">reset!</button>
+<textarea rows="4" cols="50" id="output">
+
+</textarea>
+</body>
+</html>
+
