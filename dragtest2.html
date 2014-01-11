@@ -102,7 +102,7 @@ function generateMap() {
 			var entityprototype = $("div[data-entitytype=" + type+"]");
 			var cssX = x - (entityprototype.innerWidth() / 2);
 			//var cssY = $("#level").innerHeight() + (y - (entityprototype.innerHeight() / 2));
-			var cssY = $("#level").innerHeight() - (entityprototype.innerHeight() / 2) + y;
+			var cssY = $("#level").innerHeight() - (entityprototype.innerHeight() / 2) - y;
 			console.log("levelheight: "+$("#level").innerHeight());
 			//alert(entityprototype.html());
 			entityprototype.clone().appendTo("#level")
