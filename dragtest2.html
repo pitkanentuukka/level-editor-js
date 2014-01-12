@@ -102,7 +102,7 @@ function generateMap() {
 			var entityprototype = $("div[data-entitytype=" + type+"]");
 			var cssX = x - (entityprototype.innerWidth() / 2);
 			//var cssY = $("#level").innerHeight() + (y - (entityprototype.innerHeight() / 2));
-			var cssY = $("#level").innerHeight() - (entityprototype.innerHeight() / 2) - y;
+			var cssY = $("#level").height() - (entityprototype.innerHeight() / 2) - y;
 			console.log("levelheight: "+$("#level").innerHeight());
 			//alert(entityprototype.html());
 			entityprototype.clone().appendTo("#level")
@@ -132,8 +132,8 @@ function generateText() {
 			var height = $(this).innerHeight();
 			var position = $(this).position();
 			itemX = position.left + ($(this).innerWidth() / 2);
-			itemY = $("#level").innerHeight() - (position.top + ($(this).innerHeight() / 2));
-
+			itemY = $("#level").height() - (position.top + ($(this).innerHeight() / 2));
+		
 			mappeditemtext = mappeditemtext.concat(" x=");
 			mappeditemtext = mappeditemtext.concat("\"");
 			mappeditemtext = mappeditemtext.concat(itemX);
