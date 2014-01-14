@@ -14,6 +14,8 @@
 .draggable { position:absolute }
 .ui-selected { border-style:solid; }
 .ui-selecting { border-style:dotted; }
+.listeditem { display:inline-block; }
+
 </style>
 <script>
 $(function() {
@@ -21,7 +23,7 @@ $(function() {
 			containment : "#level"
 			});
 	$(".mappeditem").selectable();
-	$(".mappeditem").resizable();
+	//$(".mappeditem").resizable();
 
 	$("#level").resizable();
 		/*
@@ -64,7 +66,7 @@ $(function() {
 
 
 
-	$(".listeditem").resizable();
+	//$(".listeditem").resizable();
 
 
 
@@ -101,9 +103,10 @@ function generateMap() {
 			// we create a new mapped item from it
 			var entityprototype = $("div[data-entitytype=" + type+"]");
 			var cssX = x - (entityprototype.innerWidth() / 2);
+			console.log("x: " + x);
+			console.log("entityprototype: " + entityprototype.innerWidth());
 			//var cssY = $("#level").innerHeight() + (y - (entityprototype.innerHeight() / 2));
 			var cssY = $("#level").height() - (entityprototype.innerHeight() / 2) - y;
-			console.log("levelheight: "+$("#level").innerHeight());
 			//alert(entityprototype.html());
 			entityprototype.clone().appendTo("#level")
 				.removeClass("listeditem")
@@ -196,15 +199,20 @@ $(".box").draggable({
 
 </head>
 <body>
-<div id="level" class="ui-widget-content droppable">
 </div>
-<div class="listeditem" data-entitytype="tile" width=96px height=96px><img src="tile2.png"></div>
 <button id="textgenerator" onclick="generateText()">map to text!</button>
 <button id="mapgenerator" onclick="generateMap()">text to map!</button>
 <button id="reset" onclick="reset()">reset!</button>
 <textarea rows="4" cols="50" id="output">
 
 </textarea>
+<div id=itemlist>
+<div class="listeditem" data-entitytype="tile" width=96px height=96px><img src="tile2.png"></div>
+<div class="listeditem" data-entitytype="pill" width=39px height=42px><img src="redpill.png"></div>
+<div class="listeditem" data-entitytype="player" width=128px height=128px><img src="player_mouth_closed.png"></div>
+<div class="listeditem" data-entitytype="exit" width=128px height=128px><img src="exit.png"></div>
+</div>
+<div id="level" class="ui-widget-content droppable">
 </body>
 </html>
 
