@@ -62,9 +62,18 @@ $(function() {
 		dragged = ui.helper.clone();
 		$(dragged).draggable();
 		$(dragged).resizable();
+		$(".mappeditem").draggable();
 		});
 
 
+	$(".mappeditem").draggable( {
+
+		appendTo: "#level",
+
+		snap: true, 
+	}).bind ("dragstop", f = function (event, ui) {
+		$(".mappeditem").draggable();
+		});
 
 
 	//$(".listeditem").resizable();
